@@ -14,6 +14,7 @@ import { getFactoryState } from '@/design/factory/get-factory-state'
 import { getProductKind, type ProductKind } from '@/design/factory/get-product-kind'
 import type { SitePost } from '@/lib/site-connector'
 import { HOME_PAGE_OVERRIDE_ENABLED, HomePageOverride } from '@/overrides/home-page'
+import { ProfileSocialHome } from '@/components/home/profile-social-home'
 
 export const revalidate = 300
 
@@ -537,7 +538,10 @@ export default async function HomePage() {
       {productKind === 'editorial' ? (
         <EditorialHome primaryTask={primaryTask} articlePosts={articlePosts} supportTasks={supportTasks} />
       ) : null}
-      {productKind === 'visual' ? (
+      {productKind === 'visual' && primaryTask?.key === 'profile' ? (
+        <ProfileSocialHome profilePosts={profilePosts} />
+      ) : null}
+      {productKind === 'visual' && primaryTask?.key !== 'profile' ? (
         <VisualHome primaryTask={primaryTask} imagePosts={imagePosts} profilePosts={profilePosts} articlePosts={articlePosts} />
       ) : null}
       {productKind === 'curation' ? (
