@@ -33,9 +33,9 @@ export const siteTaskDefinitions = [
   },
   {
     key: 'profile',
-    label: 'Profiles',
+    label: 'Social profiles',
     route: '/profile',
-    description: 'Creator and business profiles.',
+    description: 'Public profiles, bios, and social presence in one place.',
     contentType: 'profile',
     enabled: true,
   },

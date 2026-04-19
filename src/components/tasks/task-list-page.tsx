@@ -187,13 +187,15 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
         ) : null}
 
         {layoutKey === 'profile-creator' || layoutKey === 'profile-business' ? (
-          <section className={`mb-12 rounded-[2.2rem] p-8 shadow-[0_24px_70px_rgba(15,23,42,0.1)] ${ui.panel}`}>
+          <section className={`mb-12 rounded-[2.2rem] p-8 shadow-[0_24px_70px_rgba(15,23,42,0.08)] ${ui.panel}`}>
             <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
               <div className={`min-h-[240px] rounded-[2rem] ${ui.soft}`} />
               <div>
                 <p className={`text-xs uppercase tracking-[0.3em] ${ui.muted}`}>{taskConfig?.label || task}</p>
-                <h1 className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-foreground">Profiles with stronger identity, trust, and reputation cues.</h1>
-                <p className={`mt-5 max-w-2xl text-sm leading-8 ${ui.muted}`}>This layout prioritizes the person or business surface first, then lets the feed continue below without borrowing the same visual logic used by articles or listings.</p>
+                <h1 className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-foreground">A directory tuned for social profiles—not recycled feeds.</h1>
+                <p className={`mt-5 max-w-2xl text-sm leading-8 ${ui.muted}`}>
+                  Scan handles, bios, and trust cues quickly, then open the full profile when someone feels like the right fit. The layout keeps identity surfaces readable without borrowing article or marketplace patterns.
+                </p>
               </div>
             </div>
           </section>

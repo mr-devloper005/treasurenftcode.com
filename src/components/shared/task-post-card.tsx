@@ -55,6 +55,12 @@ const getImageUrl = (post: SitePost, content: ListingContent) => {
 }
 
 const cardStyles = {
+  'profile-glass': {
+    frame: 'rounded-[1.85rem] border border-black/[0.06] bg-white/70 shadow-[0_20px_60px_rgba(15,15,15,0.06)] backdrop-blur-xl hover:-translate-y-0.5 hover:border-[#ff4d2e]/25 hover:shadow-[0_28px_70px_rgba(255,77,46,0.12)]',
+    muted: 'text-neutral-600',
+    title: 'text-neutral-950',
+    badge: 'bg-[#ff4d2e] text-white',
+  },
   'listing-elevated': {
     frame: 'rounded-[1.9rem] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.08)] hover:-translate-y-1 hover:shadow-[0_28px_75px_rgba(15,23,42,0.14)]',
     muted: 'text-slate-600',

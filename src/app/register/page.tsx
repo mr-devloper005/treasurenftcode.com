@@ -1,12 +1,26 @@
 import Link from 'next/link'
-import { Bookmark, Building2, FileText, Image as ImageIcon, Sparkles } from 'lucide-react'
+import { Bookmark, Building2, FileText, Image as ImageIcon, Sparkles, User } from 'lucide-react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
+import { RegisterForm } from '@/components/shared/auth-forms'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { getProductKind } from '@/design/factory/get-product-kind'
 import { REGISTER_PAGE_OVERRIDE_ENABLED, RegisterPageOverride } from '@/overrides/register-page'
 
-function getRegisterConfig(kind: ReturnType<typeof getProductKind>) {
+function getRegisterConfig(kind: ReturnType<typeof getProductKind>, primaryTask: string) {
+  if (primaryTask === 'profile') {
+    return {
+      shell: 'bg-[#f2f2f0] text-neutral-950',
+      panel: 'border border-black/[0.08] bg-white/75 shadow-[0_24px_70px_rgba(0,0,0,0.06)] backdrop-blur-xl',
+      side: 'border border-black/[0.08] bg-white/55 shadow-[0_18px_50px_rgba(0,0,0,0.04)] backdrop-blur-md',
+      muted: 'text-neutral-600',
+      action:
+        'inline-flex h-12 w-full items-center justify-center rounded-full bg-[#ff4d2e] px-6 text-sm font-semibold text-white shadow-[0_12px_36px_rgba(255,77,46,0.35)] transition hover:bg-[#e63e22] disabled:pointer-events-none disabled:opacity-60',
+      icon: User,
+      title: 'Create your public profile',
+      body: 'Set up a social-forward account with a calmer onboarding flow. Your profile details stay available locally after you register.',
+    }
+  }
   if (kind === 'directory') {
     return {
       shell: 'bg-[#f8fbff] text-slate-950',
@@ -62,7 +76,7 @@ export default function RegisterPage() {
 
   const { recipe } = getFactoryState()
   const productKind = getProductKind(recipe)
-  const config = getRegisterConfig(productKind)
+  const config = getRegisterConfig(productKind, recipe.primaryTask)
   const Icon = config.icon
 
   return (
@@ -83,13 +97,7 @@ export default function RegisterPage() {
 
           <div className={`rounded-[2rem] p-8 ${config.panel}`}>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">Create account</p>
-            <form className="mt-6 grid gap-4">
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Full name" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Email address" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Password" type="password" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="What are you creating or publishing?" />
-              <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${config.action}`}>Create account</button>
-            </form>
+            <RegisterForm buttonClassName={config.action} />
             <div className={`mt-6 flex items-center justify-between text-sm ${config.muted}`}>
               <span>Already have an account?</span>
               <Link href="/login" className="inline-flex items-center gap-2 font-semibold hover:underline">
