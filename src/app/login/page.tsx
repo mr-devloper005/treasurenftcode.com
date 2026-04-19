@@ -1,12 +1,26 @@
 import Link from 'next/link'
-import { Bookmark, Building2, FileText, Image as ImageIcon, Sparkles } from 'lucide-react'
+import { Bookmark, Building2, FileText, Image as ImageIcon, Sparkles, User } from 'lucide-react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
+import { LoginForm } from '@/components/shared/auth-forms'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { getProductKind } from '@/design/factory/get-product-kind'
 import { LOGIN_PAGE_OVERRIDE_ENABLED, LoginPageOverride } from '@/overrides/login-page'
 
-function getLoginConfig(kind: ReturnType<typeof getProductKind>) {
+function getLoginConfig(kind: ReturnType<typeof getProductKind>, primaryTask: string) {
+  if (primaryTask === 'profile') {
+    return {
+      shell: 'bg-[#f2f2f0] text-neutral-950',
+      panel: 'border border-black/[0.08] bg-white/75 shadow-[0_24px_70px_rgba(0,0,0,0.06)] backdrop-blur-xl',
+      side: 'border border-black/[0.08] bg-white/55 shadow-[0_18px_50px_rgba(0,0,0,0.04)] backdrop-blur-md',
+      muted: 'text-neutral-600',
+      action:
+        'inline-flex h-12 w-full items-center justify-center rounded-full bg-[#ff4d2e] px-6 text-sm font-semibold text-white shadow-[0_12px_36px_rgba(255,77,46,0.35)] transition hover:bg-[#e63e22] disabled:pointer-events-none disabled:opacity-60',
+      icon: User,
+      title: 'Sign in to your social profile',
+      body: 'Manage your public presence and account preferences. Successful sign-in is saved in this browser so you can return without friction.',
+    }
+  }
   if (kind === 'directory') {
     return {
       shell: 'bg-[#f8fbff] text-slate-950',
@@ -62,7 +76,7 @@ export default function LoginPage() {
 
   const { recipe } = getFactoryState()
   const productKind = getProductKind(recipe)
-  const config = getLoginConfig(productKind)
+  const config = getLoginConfig(productKind, recipe.primaryTask)
   const Icon = config.icon
 
   return (
@@ -83,11 +97,7 @@ export default function LoginPage() {
 
           <div className={`rounded-[2rem] p-8 ${config.panel}`}>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">Welcome back</p>
-            <form className="mt-6 grid gap-4">
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Email address" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Password" type="password" />
-              <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${config.action}`}>Sign in</button>
-            </form>
+            <LoginForm buttonClassName={config.action} />
             <div className={`mt-6 flex items-center justify-between text-sm ${config.muted}`}>
               <Link href="/forgot-password" className="hover:underline">Forgot password?</Link>
               <Link href="/register" className="inline-flex items-center gap-2 font-semibold hover:underline">

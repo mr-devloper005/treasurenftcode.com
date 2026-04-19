@@ -62,19 +62,34 @@ export function Footer() {
 
   if (recipe.footer === 'minimal-footer') {
     return (
-      <footer className="border-t border-[#d7deca] bg-[#f4f6ef] text-[#1f2617]">
-        <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-8 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-          <div>
-            <p className="text-lg font-semibold">{SITE_CONFIG.name}</p>
-            <p className="mt-1 text-sm text-[#56604b]">{SITE_CONFIG.description}</p>
+      <footer className="border-t border-black/[0.06] bg-[#f2f2f0] text-neutral-950">
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-10 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+          <div className="flex items-start gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-black/[0.08] bg-white p-1.5 shadow-sm">
+              <img src="/favicon.png?v=20260401" alt="" width="48" height="48" className="h-full w-full object-contain" />
+            </div>
+            <div>
+              <p className="text-lg font-semibold tracking-tight">{SITE_CONFIG.name}</p>
+              <p className="mt-1 max-w-md text-sm leading-relaxed text-neutral-600">{SITE_CONFIG.description}</p>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2">
             {enabledTasks.slice(0, 5).map((task) => (
-              <Link key={task.key} href={task.route} className="rounded-lg border border-[#d7deca] bg-white px-3 py-2 text-sm font-medium text-[#1f2617] hover:bg-[#ebefdf]">
+              <Link
+                key={task.key}
+                href={task.route}
+                className="rounded-full border border-black/[0.08] bg-white/80 px-4 py-2 text-sm font-medium text-neutral-900 shadow-sm backdrop-blur-sm transition hover:border-[#ff4d2e]/35 hover:text-[#c4351f]"
+              >
                 {task.label}
               </Link>
             ))}
+            <Link href="/search" className="rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-[#ff4d2e] hover:text-[#c4351f]">
+              Search
+            </Link>
           </div>
+        </div>
+        <div className="border-t border-white/10 bg-[#0a0a0a] py-4 text-center text-xs text-white/60">
+          &copy; {new Date().getFullYear()} {SITE_CONFIG.name}
         </div>
       </footer>
     )

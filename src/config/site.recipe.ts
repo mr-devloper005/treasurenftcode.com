@@ -10,7 +10,7 @@ export const SITE_RECIPE: SiteRecipe = {
   primaryTask: 'profile',
   enabledTasks: ['profile'],
   taskTemplates: {
-    profile: 'profile-creator'
+    profile: 'profile-business',
   },
   manualOverrides: {
     navbar: false,
