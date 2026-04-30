@@ -4,9 +4,10 @@ import { Footer } from "@/components/shared/footer";
 import { NavbarShell } from "@/components/shared/navbar-shell";
 import { ContentImage } from "@/components/shared/content-image";
 import { TaskPostCard } from "@/components/shared/task-post-card";
-import { Button } from "@/components/ui/button";
 import { SchemaJsonLd } from "@/components/seo/schema-jsonld";
 import { buildPostUrl } from "@/lib/task-data";
+import { ShareButton } from "@/components/profile/share-button";
+import { UserPlus } from "lucide-react";
 import { buildPostMetadata, buildTaskMetadata } from "@/lib/seo";
 import { fetchTaskPostBySlug, fetchTaskPosts } from "@/lib/task-data";
 import { SITE_CONFIG } from "@/lib/site-config";
@@ -73,7 +74,6 @@ export default async function ProfileDetailPage({ params }: { params: Promise<{ 
     (content.name as string | undefined) ||
     post.title;
   const website = content.website as string | undefined;
-  const domain = website ? website.replace(/^https?:\/\//, "").replace(/\/.*$/, "") : undefined;
   const description =
     (content.description as string | undefined) ||
     post.summary ||
@@ -106,43 +106,71 @@ export default async function ProfileDetailPage({ params }: { params: Promise<{ 
     ],
   };
 
+  const handle = post.slug ? `@${post.slug}` : undefined;
+
   return (
     <div className="min-h-screen bg-background">
       <NavbarShell />
-      <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+      <main className="mx-auto w-full max-w-4xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
         <SchemaJsonLd data={breadcrumbData} />
-        <section className="rounded-3xl border border-border/60 bg-white/90 p-8 shadow-sm md:p-12">
+        <section className="rounded-3xl border border-border/60 bg-white p-8 shadow-sm md:p-12">
           <div className="grid gap-8 md:grid-cols-[200px_1fr] md:items-start">
             <div className="flex justify-center md:justify-start">
-              <div className="relative h-36 w-36 overflow-hidden rounded-full border border-border/70 bg-muted">
+              <div className="relative h-40 w-40 overflow-hidden rounded-full border border-border/70 bg-muted shadow-sm">
                 {logoUrl ? (
-                  <ContentImage src={logoUrl} alt={post.title} fill className="object-cover" sizes="144px" intrinsicWidth={144} intrinsicHeight={144} />
+                  <ContentImage src={logoUrl} alt={post.title} fill className="object-cover" sizes="160px" intrinsicWidth={160} intrinsicHeight={160} />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center text-3xl font-semibold text-muted-foreground">
+                  <div className="flex h-full w-full items-center justify-center text-4xl font-semibold text-muted-foreground">
                     {post.title.slice(0, 1).toUpperCase()}
                   </div>
                 )}
               </div>
             </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground sm:text-4xl">{brandName}</h1>
-              {domain ? (
-                <p className="mt-1 text-sm font-medium text-muted-foreground">{domain}</p>
-              ) : null}
+            <div className="space-y-5">
+              <div>
+                <h1 className="text-3xl font-bold text-foreground sm:text-4xl">{brandName}</h1>
+                {handle ? (
+                  <p className="mt-1 text-sm font-medium text-muted-foreground">{handle}</p>
+                ) : null}
+              </div>
               <article
-                className="article-content prose prose-slate mt-6 max-w-2xl text-base leading-relaxed prose-p:my-4 prose-a:text-primary prose-a:underline prose-strong:font-semibold"
+                className="article-content prose prose-slate max-w-2xl text-sm leading-relaxed text-slate-600 prose-p:my-3 prose-a:text-sky-500 prose-a:no-underline hover:prose-a:underline prose-strong:font-semibold"
                 dangerouslySetInnerHTML={{ __html: descriptionHtml }}
               />
               {website ? (
-                <div className="mt-8">
-                  <Button asChild size="lg" className="px-7 text-base">
-                    <Link href={website} target="_blank" rel="noopener noreferrer">
-                      Visit Official Site
-                    </Link>
-                  </Button>
-                </div>
+                <a
+                  href={website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-sm text-sky-500 hover:underline"
+                >
+                  {website}
+                </a>
               ) : null}
+              <div className="flex items-center gap-3 pt-2">
+                <Link
+                  href="/login"
+                  className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
+                >
+                  <UserPlus className="h-4 w-4" />
+                  Follow
+                </Link>
+                <ShareButton />
+              </div>
             </div>
+          </div>
+        </section>
+
+        <section className="mt-8">
+          <div className="border-b border-border">
+            <div className="flex gap-6">
+              <button className="border-b-2 border-sky-500 px-1 pb-3 text-sm font-medium text-sky-600 transition-colors">
+                Uploads
+              </button>
+            </div>
+          </div>
+          <div className="py-16 text-center">
+            <p className="text-sm text-muted-foreground">That&apos;s everything we&apos;ve got!</p>
           </div>
         </section>
 
