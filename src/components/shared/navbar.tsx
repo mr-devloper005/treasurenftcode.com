@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button'
 import { useAuth } from '@/lib/auth-context'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
 import { cn } from '@/lib/utils'
-import { siteContent } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { NAVBAR_OVERRIDE_ENABLED, NavbarOverride } from '@/overrides/navbar'
 
@@ -105,8 +104,6 @@ export function Navbar() {
     if (enabledTasks.length === 1 && enabledTasks[0]?.key === 'profile') {
       return [
         { key: 'home', label: 'Home', href: '/', icon: Home },
-        { key: 'profile', label: 'Profiles', href: '/profile', icon: User },
-        { key: 'search', label: 'Search', href: '/search', icon: Search },
         { key: 'about', label: 'About', href: '/about', icon: Sparkles },
       ]
     }
@@ -146,7 +143,6 @@ export function Navbar() {
               </div>
               <div className="min-w-0 hidden sm:block">
                 <span className="block truncate text-xl font-semibold">{SITE_CONFIG.name}</span>
-                <span className="block text-[10px] uppercase tracking-[0.24em] opacity-60">{siteContent.navbar.tagline}</span>
               </div>
             </Link>
 
@@ -241,7 +237,6 @@ export function Navbar() {
             </div>
             <div className="min-w-0 hidden sm:block">
               <span className="block truncate text-xl font-semibold">{SITE_CONFIG.name}</span>
-              <span className="hidden text-[10px] uppercase tracking-[0.28em] opacity-70 sm:block">{siteContent.navbar.tagline}</span>
             </div>
           </Link>
 
@@ -306,13 +301,6 @@ export function Navbar() {
             </Link>
           ) : null}
 
-          <Button variant="ghost" size="icon" asChild className="hidden rounded-full md:flex">
-            <Link href="/search">
-              <Search className="h-5 w-5" />
-              <span className="sr-only">Search</span>
-            </Link>
-          </Button>
-
           {isAuthenticated ? (
             <NavbarAuthControls />
           ) : (
@@ -358,10 +346,6 @@ export function Navbar() {
       {isMobileMenuOpen && (
         <div className={style.mobile}>
           <div className="space-y-2 px-4 py-4">
-            <Link href="/search" onClick={() => setIsMobileMenuOpen(false)} className="mb-3 flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3 text-sm font-semibold text-muted-foreground">
-              <Search className="h-4 w-4" />
-              Search the site
-            </Link>
             {mobileNavigation.map((item) => {
               const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href)
               return (

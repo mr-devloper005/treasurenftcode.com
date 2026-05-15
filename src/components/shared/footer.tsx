@@ -1,7 +1,6 @@
 import Link from 'next/link'
-import { FileText, Building2, LayoutGrid, Tag, Github, Twitter, Linkedin, Image as ImageIcon, User, ArrowRight, Sparkles } from 'lucide-react'
+import { FileText, Building2, LayoutGrid, Tag, Github, Twitter, Linkedin, Image as ImageIcon, ArrowRight, Sparkles } from 'lucide-react'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
-import { siteContent } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { FOOTER_OVERRIDE_ENABLED, FooterOverride } from '@/overrides/footer'
 
@@ -11,7 +10,7 @@ const taskIcons: Record<TaskKey, any> = {
   sbm: LayoutGrid,
   classified: Tag,
   image: ImageIcon,
-  profile: User,
+  profile: LayoutGrid,
   social: LayoutGrid,
   pdf: FileText,
   org: Building2,
@@ -19,7 +18,7 @@ const taskIcons: Record<TaskKey, any> = {
 }
 
 const footerLinks = {
-  platform: SITE_CONFIG.tasks.filter((task) => task.enabled).map((task) => ({
+  platform: SITE_CONFIG.tasks.filter((task) => task.enabled && task.key !== 'profile').map((task) => ({
     name: task.label,
     href: task.route,
     icon: taskIcons[task.key] || LayoutGrid,
@@ -70,11 +69,11 @@ export function Footer() {
             </div>
             <div>
               <p className="text-lg font-semibold tracking-tight">{SITE_CONFIG.name}</p>
-              <p className="mt-1 max-w-md text-sm leading-relaxed text-neutral-600">{SITE_CONFIG.description}</p>
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
             {enabledTasks.slice(0, 5).map((task) => (
+              task.key !== 'profile' ? (
               <Link
                 key={task.key}
                 href={task.route}
@@ -82,10 +81,13 @@ export function Footer() {
               >
                 {task.label}
               </Link>
+              ) : null
             ))}
-            <Link href="/search" className="rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-[#ff4d2e] hover:text-[#c4351f]">
-              Search
-            </Link>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Link href="/contact" className="rounded-full border border-black/[0.08] bg-white/80 px-4 py-2 text-sm font-semibold text-neutral-900 shadow-sm backdrop-blur-sm transition hover:border-[#ff4d2e]/35 hover:text-[#c4351f]">Contact Us</Link>
+            <Link href="/help" className="rounded-full border border-black/[0.08] bg-white/80 px-4 py-2 text-sm font-semibold text-neutral-900 shadow-sm backdrop-blur-sm transition hover:border-[#ff4d2e]/35 hover:text-[#c4351f]">Help Center</Link>
+            <Link href="/about" className="rounded-full border border-black/[0.08] bg-white/80 px-4 py-2 text-sm font-semibold text-neutral-900 shadow-sm backdrop-blur-sm transition hover:border-[#ff4d2e]/35 hover:text-[#c4351f]">About Us</Link>
           </div>
         </div>
         <div className="border-t border-white/10 bg-[#0a0a0a] py-4 text-center text-xs text-white/60">
@@ -107,10 +109,8 @@ export function Footer() {
                 </div>
                 <div>
                   <p className="text-lg font-semibold">{SITE_CONFIG.name}</p>
-                  <p className="text-xs uppercase tracking-[0.24em] text-slate-400">{siteContent.footer.tagline}</p>
                 </div>
               </div>
-              <p className="mt-5 max-w-md text-sm leading-7 text-slate-300">{SITE_CONFIG.description}</p>
               {primaryTask ? (
                 <Link href={primaryTask.route} className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#8df0c8] px-4 py-2.5 text-sm font-semibold text-[#07111f] hover:bg-[#77dfb8]">
                   Explore {primaryTask.label}
@@ -144,6 +144,11 @@ export function Footer() {
                     </Link>
                   ))}
                 </div>
+                <div className="mt-5 flex flex-wrap gap-2 text-xs font-semibold">
+                  <Link href="/contact" className="rounded-full border border-white/15 bg-white/8 px-3 py-1.5 text-slate-100 hover:bg-white/12">Contact Us</Link>
+                  <Link href="/help" className="rounded-full border border-white/15 bg-white/8 px-3 py-1.5 text-slate-100 hover:bg-white/12">Help Center</Link>
+                  <Link href="/about" className="rounded-full border border-white/15 bg-white/8 px-3 py-1.5 text-slate-100 hover:bg-white/12">About Us</Link>
+                </div>
               </div>
             </div>
           </div>
@@ -164,7 +169,6 @@ export function Footer() {
                 Editorial desk
               </div>
               <h3 className="mt-5 text-3xl font-semibold tracking-[-0.04em]">{SITE_CONFIG.name}</h3>
-              <p className="mt-4 max-w-md text-sm leading-7 text-[#72594a]">{SITE_CONFIG.description}</p>
             </div>
             <div>
               <h4 className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8b6d5a]">Sections</h4>
@@ -181,6 +185,11 @@ export function Footer() {
                   <li key={item.name}><Link href={item.href} className="hover:text-[#2f1d16]">{item.name}</Link></li>
                 ))}
               </ul>
+              <div className="mt-5 flex flex-wrap gap-2 text-xs font-semibold">
+                <Link href="/contact" className="rounded-full border border-[#dbc6b6] bg-white/80 px-3 py-1.5 text-[#2f1d16] hover:bg-white">Contact Us</Link>
+                <Link href="/help" className="rounded-full border border-[#dbc6b6] bg-white/80 px-3 py-1.5 text-[#2f1d16] hover:bg-white">Help Center</Link>
+                <Link href="/about" className="rounded-full border border-[#dbc6b6] bg-white/80 px-3 py-1.5 text-[#2f1d16] hover:bg-white">About Us</Link>
+              </div>
             </div>
           </div>
         </div>
@@ -199,10 +208,13 @@ export function Footer() {
               </div>
               <div>
                 <span className="block text-lg font-semibold">{SITE_CONFIG.name}</span>
-                <span className="text-xs uppercase tracking-[0.22em] text-slate-500">{siteContent.footer.tagline}</span>
               </div>
             </Link>
-            <p className="mt-5 max-w-sm text-sm leading-7 text-slate-600">{SITE_CONFIG.description}</p>
+            <div className="mt-5 flex flex-wrap gap-2 text-xs font-semibold">
+              <Link href="/contact" className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-slate-800 hover:bg-slate-50">Contact Us</Link>
+              <Link href="/help" className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-slate-800 hover:bg-slate-50">Help Center</Link>
+              <Link href="/about" className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-slate-800 hover:bg-slate-50">About Us</Link>
+            </div>
           </div>
           {(['platform', 'company', 'resources', 'legal'] as const).map((section) => (
             <div key={section}>
