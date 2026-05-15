@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import { ArrowUpRight, LifeBuoy, Mail, MessageCircle, Sparkles } from 'lucide-react'
+import { LifeBuoy, MessageCircle, Sparkles } from 'lucide-react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
 import { SITE_CONFIG } from '@/lib/site-config'
@@ -67,16 +66,6 @@ export default function ContactPage() {
               </div>
             ))}
 
-            <div className="rounded-[1.75rem] border border-black/[0.06] bg-[#0a0a0a] p-6 text-white">
-              <Mail className="h-5 w-5 text-[#ff4d2e]" />
-              <p className="mt-4 text-sm font-semibold uppercase tracking-[0.2em] text-white/60">Direct line</p>
-              <p className="mt-2 text-lg font-semibold">hello@{SITE_CONFIG.domain}</p>
-              <p className="mt-2 text-sm text-white/65">We typically respond within two business days.</p>
-              <Link href="/help" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#ff4d2e] hover:text-[#ff7a62]">
-                Visit help center
-                <ArrowUpRight className="h-4 w-4" />
-              </Link>
-            </div>
           </div>
 
           <div className="rounded-[2rem] border border-black/[0.08] bg-white/75 p-8 shadow-[0_28px_80px_rgba(0,0,0,0.07)] backdrop-blur-xl sm:p-10">

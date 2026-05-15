@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
@@ -37,7 +37,7 @@ export function LoginForm({ buttonClassName }: { buttonClassName: string }) {
         required
       />
       <button type="submit" disabled={isLoading} className={buttonClassName}>
-        {isLoading ? 'Signing in…' : 'Sign in'}
+        {isLoading ? 'Signing in...' : 'Sign in'}
       </button>
     </form>
   )
@@ -85,7 +85,7 @@ export function RegisterForm({ buttonClassName }: { buttonClassName: string }) {
         required
       />
       <button type="submit" disabled={isLoading} className={buttonClassName}>
-        {isLoading ? 'Creating…' : 'Create account'}
+        {isLoading ? 'Creating profile...' : 'Create profile'}
       </button>
     </form>
   )
